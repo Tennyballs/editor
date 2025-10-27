@@ -15,17 +15,17 @@ void loop()
 
 void meow(double value)
 {
-    props.x = value;
-    props.y = value;
-    props.rotationZ = value;
+    props.position.x = value;
+    props.position.y = value;
+    // props.rotationZ = value;
     set(&props);
 }
 
 int main()
 {
     props.backgroundColor.value = 0xFF00A0FF;
-    props.width = 128;
-    props.height = 128;
+    props.size.width = 128;
+    props.size.height = 128;
 
     unsigned long time = getTime();
     
