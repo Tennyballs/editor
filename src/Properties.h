@@ -34,7 +34,6 @@ EM_JS(void, set, (Properties *properties), {
     const element = document.getElementById(UTF8ToString(Module.HEAPU32[(offset + 0) >> 2]));
 
     if(!element) return;
-
     element.style.backgroundColor = `#${Module.HEAPU32[(offset + 4) >> 2].toString(16).padStart(8,'0')}`;
     element.style.color = `#${Module.HEAPU32[(offset + 8) >> 2].toString(16).padStart(8,'0')}`;
     element.style.left = Module.HEAPU32[(offset + 12) >> 2] + "px";
