@@ -1,6 +1,11 @@
 #include "Easings.h"
 #include <math.h>
 
+double linear(double t)
+{
+    return t;
+}
+
 double instant(double t)
 {
     return 1;
