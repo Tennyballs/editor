@@ -43,7 +43,6 @@ void tweens_update()
         }
         
         double iTime = (double) ((time - tween->time_start) / 1000.0) / ((double) (tween->time_end - tween->time_start) / 1000.0);
-        double iValue = 0;
 
         
         if(tween->ease && tween->func)

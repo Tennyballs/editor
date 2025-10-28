@@ -20,7 +20,6 @@ unsigned long getTime();
 // void tween_to_string();
 void tweens_push(Tween *tween);
 void tweens_update();
-void tweens_purge();
 
 
 #endif // TWEEN_H
