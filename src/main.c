@@ -17,7 +17,7 @@ void meow(double value)
 {
     props.position.x = value;
     props.position.y = value;
-    // props.rotationZ = value;
+    props.transform.rotateY = value;
     set(&props);
 }
 
@@ -32,11 +32,11 @@ int main()
     Tween meowT;
 
     meowT.func = &meow;
-    meowT.ease = &outExpo;
+    meowT.ease = &inOutExpo;
     meowT.value_begin = 0;
     meowT.value_end = 360;
     meowT.time_start = getTime() + 1000;
-    meowT.time_end = meowT.time_start + 1000;
+    meowT.time_end = meowT.time_start + 5000;
 
     tweens_push(&meowT);
 

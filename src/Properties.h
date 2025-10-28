@@ -15,14 +15,18 @@ typedef struct __attribute__((packed)) Size {
     unsigned int height;
 } Size;
 
+typedef struct __attribute__((packed)) Transform {
+    float rotateX;
+    float rotateY;
+    float rotateZ;
+} Transform;
+
 typedef struct __attribute__((packed)) Properties {
     const char *id;
     union Color backgroundColor, textColor;
     Position position;
     Size size;
-
-    // int x, y, width, height;
-    // float rotationZ;
+    Transform transform;
 } Properties;
 
 EM_JS(void, set, (Properties *properties), {
@@ -37,7 +41,7 @@ EM_JS(void, set, (Properties *properties), {
     element.style.top = Module.HEAPU32[(offset + 16) >> 2] + "px";
     element.style.width = Module.HEAPU32[(offset + 20) >> 2] + "px";
     element.style.height = Module.HEAPU32[(offset + 24) >> 2] + "px";
-    element.style.transform = `rotate(${ Module.HEAPF32[(offset + 28) >> 2] }deg)`;
+    element.style.transform = `translate(-50%, -50%) rotateX(${ Module.HEAPF32[(offset + 28) >> 2] }deg) rotateY(${ Module.HEAPF32[(offset + 32) >> 2] }deg) rotateZ(${ Module.HEAPF32[(offset + 36) >> 2] }deg) `;
 })
 
 #endif // PROPERTIES_H
