@@ -1,3 +1,5 @@
 #!/bin/bash
-
-emcc src/*.c -o out/main.js -sEXPORTED_RUNTIME_METHODS='["ccall", "cwrap", "HEAPU8", "HEAPU16", "HEAPU32", "HEAPU64", "HEAP8", "HEAP16", "HEAP32", "HEAP64", "HEAPF32", "HEAPF64"]'
+emcc src/*.c -o out/main.js \
+-O0 \
+-sMAX_WEBGL_VERSION=2 \
+-sUSE_GLFW
