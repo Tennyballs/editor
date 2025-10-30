@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor</title>
+    <script src="./main.js" defer></script>
+    <script>
+        const tween_ptrs = [];
+        const quad_ptrs = [];
+    </script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            image-rendering: pixelated;
+            transform-style: preserve-3d;
+        }
+
+        body{
+            background-color: rgb(0, 0, 0);
+            perspective: calc(3.5cm);
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .quad, .container {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+        }
+
+        #niko-cube {
+            transform: translate(-50%, -50%);
+            left: 50vw;
+            top: 50vh;
+            /* animation: meow 2s infinite linear; */
+            .quad {
+                width: 96px;
+                height: 96px;
+                background-color: #0000009d;
+            }
+        }
+
+        #gaming {
+            position: absolute;
+            top:0;
+            left:0;
+            font-size: xx-large;
+            z-index: -5;
+            animation: linear 1s infinite rainbow;
+        }
+
+        @keyframes rainbow {
+            0% {
+                color: hsl(0, 100%, 50%);
+            }
+            25% {
+                color: hsl(90, 100%, 50%);
+            }
+            50% {
+                color: hsl(180, 100%, 50%);
+            }
+            75% {
+                color: hsl(270, 100%, 50%);
+            }
+            100% {
+                color: hsl(360, 100%, 50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <p id="gaming">NIKO GAMING!</p>
+    <div class="3d">
+        <div class="container" id="niko-cube">
+            <div id="front" class="quad">
+                <img src="/textures/Niko.webp">
+            </div>
+            <div id="back" class="quad">
+                <img src="/textures/Niko.webp">
+            </div>
+            <div id="left" class="quad">
+                <img src="/textures/Niko.webp">
+            </div>
+            <div id="right" class="quad">
+                <img src="/textures/Niko.webp">
+            </div>
+            <div id="top" class="quad">
+                <img src="/textures/Niko.webp">
+            </div>
+            <div id="bottom" class="quad">
+                <img src="/textures/Niko.webp">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
