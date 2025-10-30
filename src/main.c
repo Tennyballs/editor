@@ -1,34 +1,49 @@
 #include <stdio.h>
 #include <math.h>
+#include <stdbool.h>
+
+#include <emscripten/emscripten.h>
+#include <emscripten/html5.h>
 
 #include "Easings.h"
 #include "Color.h"
-#include "Properties.h"
-#include "Tween.h"
 
-Properties props = {"canvas"};
+#define ELEMENT_AUTO_INIT
 
-void loop()
-{
-    tweens_update();
-}
+#include "Element.h"
 
 unsigned int SCREEN_WIDTH, SCREEN_HEIGHT;
 double SCREEN_CENTER_X, SCREEN_CENTER_Y;
 
-void meow(double value)
+Element myElement;
+
+void loop()
 {
-    props.size.width = value * SCREEN_WIDTH;
-    set(&props);
+    double v = (double)((int) emscripten_get_now() % 1000) / 1000.0;
+    myElement.style.position.x = SCREEN_CENTER_X;
+    myElement.style.position.y = SCREEN_CENTER_Y;
+    myElement.style.rotation.z = inOutExpo(v) * 360;
+    ElementApplyChanges(&myElement);
+}
+
+
+EM_BOOL resizeCallback(int eventType, const EmscriptenUiEvent *uiEvent, void *userData)
+{
+    SCREEN_WIDTH = uiEvent->windowInnerWidth;
+    SCREEN_HEIGHT = uiEvent->windowInnerHeight;
+
+    SCREEN_CENTER_X = SCREEN_WIDTH / 2.0;
+    SCREEN_CENTER_Y = SCREEN_HEIGHT / 2.0;
+
+    return false;
 }
 
 int main()
 {
-
-
     double width, height;
 
     emscripten_get_element_css_size("body", &width, &height);
+
 
     SCREEN_WIDTH = (unsigned int)width;
     SCREEN_HEIGHT = (unsigned int)height;
@@ -36,32 +51,14 @@ int main()
     SCREEN_CENTER_X = width / 2;
     SCREEN_CENTER_Y = height / 2;
 
-    props.border.width = 10;
-    props.border.color.value = 0xFFFFFFFF;
+    emscripten_set_resize_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, NULL, true, resizeCallback);
+    // stuff below here does the rest of the work.
 
-    //
-    props.color.backgroundColor.value = 0xFF0000FF;
-    
-    props.position.x = SCREEN_CENTER_X;
-    props.position.y = SCREEN_CENTER_Y;
 
-    props.size.height = SCREEN_HEIGHT;
-    props.size.height = SCREEN_HEIGHT;
-
-    unsigned long time = getTime();
-    
-    Tween meowT;
-
-    meowT.func = &meow;
-    meowT.ease = &outExpo;
-    
-    meowT.value_begin = 0;
-    meowT.value_end = 1;
-
-    meowT.time_start = getTime() + 1000;
-    meowT.time_end = meowT.time_start + 5000;
-
-    tweens_push(&meowT);
+    ElementPush(&myElement);
+    myElement.id = "niko";
+    myElement.style.scale.x = 1;
+    myElement.style.scale.y = 1;
 
 
     emscripten_set_main_loop(loop, -1, true);

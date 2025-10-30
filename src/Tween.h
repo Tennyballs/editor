@@ -1,25 +1,6 @@
 #ifndef TWEEN_H
 #define TWEEN_H
 
-typedef struct Tween
-{
-    unsigned long time_start;
-    unsigned long time_end;
+void createTween(float *);
 
-    double value_begin;
-    double value_end;
-    void (*func)(double value);
-    double (*ease)(double t);
-    char finished;
-
-    double *property;
-} Tween;
-
-unsigned long getTime();
-
-// void tween_to_string();
-void tweens_push(Tween *tween);
-void tweens_update();
-
-
-#endif // TWEEN_H
+#endif//TWEEN_H

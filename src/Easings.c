@@ -18,7 +18,7 @@ double inExpo(double t)
 
 double outExpo(double t)
 {
-    return t == 1 ? 1 : 1 - pow(2, -10 * t );
+    return t == 1 ? 1 : 1 - pow(2, -10 * t);
 }
 
 double inOutExpo(double t)

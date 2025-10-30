@@ -2,14 +2,13 @@
 #define COLOR_H
 
 typedef union Color {
-    struct __attribute__((packed)) rgba
+    struct __attribute__((packed)) RGBA
     {
         unsigned char a;
         unsigned char b;
         unsigned char g;
         unsigned char r;
-    } rgba;
-    
+    } values;
     unsigned int value;
 } Color;
 
