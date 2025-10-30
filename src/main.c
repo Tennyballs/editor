@@ -18,14 +18,17 @@ EM_BOOL resizeCallback(int eventType, const EmscriptenUiEvent *uiEvent, void *us
     SCREEN_WIDTH = uiEvent->windowInnerWidth;
     SCREEN_HEIGHT = uiEvent->windowInnerHeight;
 
-    SCREEN_CENTER_X = SCREEN_WIDTH / 2.0;
-    SCREEN_CENTER_Y = SCREEN_HEIGHT / 2.0;
+    SCREEN_CENTER_X = (double) SCREEN_WIDTH / 2.0;
+    SCREEN_CENTER_Y = (double) SCREEN_HEIGHT / 2.0;
+
+    emscripten_set_canvas_element_size("canvas", SCREEN_WIDTH, SCREEN_HEIGHT);
 
     return false;
 }
 
 void loop()
 {
+
 }
 
 int main()
@@ -42,9 +45,11 @@ int main()
     SCREEN_CENTER_Y = height / 2;
 
     emscripten_set_resize_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, NULL, true, resizeCallback);
+    emscripten_set_canvas_element_size("canvas", SCREEN_WIDTH, SCREEN_HEIGHT);
+    
     // stuff below here does the rest of the work.
 
+
     emscripten_set_main_loop(loop, -1, true);
-    
     return 0;
 }
