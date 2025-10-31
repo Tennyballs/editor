@@ -9,6 +9,9 @@
 #define GLFW_INCLUDE_ES3
 #include <GL/glfw.h>
 #include "Image.h"
+#include "Helper.h"
+#include "Object.h"
+#include "Arrays.h"
 
 
 
@@ -31,6 +34,7 @@ EM_BOOL resizeCallback(int eventType, const EmscriptenUiEvent *uiEvent, void *us
 
 struct MainData
 {
+    GLuint shaderProgram;
     EmscriptenWebGLContextAttributes attrs;
     EMSCRIPTEN_WEBGL_CONTEXT_HANDLE handle;
 } MainData;
@@ -38,6 +42,9 @@ struct MainData
 void loop()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    
+    
     glFlush();
 }
 
@@ -64,12 +71,17 @@ int main()
 
     emscripten_set_resize_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, NULL, true, resizeCallback);
 
-    Image *img = load_image("/Niko.png");
-    printf("Image '%s' loaded with success!\n", "/Niko.png");
-    printf("Image dimensions: %ix%i\n", img->width, img->height);
+    Image *img = load_image("/texture/Niko.png");
+
+
+    MainData.shaderProgram = helper_basic_shader_program_setup();
+    glUseProgram(MainData.shaderProgram);
+
+    GLuint niko = helper_gen_texture(img);
+
+    glDeleteTextures(1, &niko);
     
 
-    printf("Success!\n");
     emscripten_set_main_loop(loop, -1, true);
     return 0;
 }

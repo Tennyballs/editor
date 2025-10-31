@@ -1,5 +1,6 @@
 #ifndef IMAGE_H
 #define IMAGE_H
+
 #include <stdlib.h>
 
 typedef struct __attribute__((packed)) Image
@@ -29,6 +30,4 @@ Image *load_image(const char *__src)
 
     return img;
 }
-
-    
 #endif//IMAGE_H

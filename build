@@ -3,4 +3,4 @@ emcc src/*.c -o out/main.js \
 -O0 \
 -sMAX_WEBGL_VERSION=2 \
 -sUSE_GLFW \
---preload-file src/source@/
+--preload-file source@/
