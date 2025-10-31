@@ -64,8 +64,6 @@ int main()
 
     emscripten_set_resize_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, NULL, true, resizeCallback);
 
-    // printf("[%i, %i]\n", SCREEN_WIDTH, SCREEN_HEIGHT);
-
     Image *img = load_image("/Niko.png");
     printf("Image '%s' loaded with success!\n", "/Niko.png");
     printf("Image dimensions: %ix%i\n", img->width, img->height);
