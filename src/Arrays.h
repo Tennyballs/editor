@@ -6,6 +6,4 @@
 
 #include "Object.h"
 
-GLuint **textures;
-
 #endif//ARRAY_H
