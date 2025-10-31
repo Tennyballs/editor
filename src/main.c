@@ -8,10 +8,9 @@
 // GL
 #define GLFW_INCLUDE_ES3
 #include <GL/glfw.h>
+#include "Image.h"
 
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
 
 unsigned int SCREEN_WIDTH, SCREEN_HEIGHT;
 double SCREEN_CENTER_X, SCREEN_CENTER_Y;
@@ -27,8 +26,6 @@ EM_BOOL resizeCallback(int eventType, const EmscriptenUiEvent *uiEvent, void *us
 
     emscripten_set_canvas_element_size("#canvas", SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    // printf("%i, %i\n", SCREEN_WIDTH, SCREEN_HEIGHT);
-
     return true;
 }
 
@@ -37,10 +34,6 @@ struct MainData
     EmscriptenWebGLContextAttributes attrs;
     EMSCRIPTEN_WEBGL_CONTEXT_HANDLE handle;
 } MainData;
-
-// typedef struct __attribute__((packed)) Vertex {
-//     GLuint 
-// } VertexObject;
 
 void loop()
 {
@@ -71,7 +64,12 @@ int main()
 
     emscripten_set_resize_callback(EMSCRIPTEN_EVENT_TARGET_WINDOW, NULL, true, resizeCallback);
 
-    printf("[%i, %i]\n", SCREEN_WIDTH, SCREEN_HEIGHT);
+    // printf("[%i, %i]\n", SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    Image *img = load_image("/Niko.png");
+    printf("Image '%s' loaded with success!\n", "/Niko.png");
+    printf("Image dimensions: %ix%i\n", img->width, img->height);
+    
 
     printf("Success!\n");
     emscripten_set_main_loop(loop, -1, true);
