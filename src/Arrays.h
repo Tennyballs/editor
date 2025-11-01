@@ -6,4 +6,6 @@
 
 #include "Object.h"
 
+Object **objects;
+
 #endif//ARRAY_H

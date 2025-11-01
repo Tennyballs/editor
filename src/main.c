@@ -39,11 +39,13 @@ struct MainData
     EMSCRIPTEN_WEBGL_CONTEXT_HANDLE handle;
 } MainData;
 
+Object myObject;
+
 void loop()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    
+    object_draw(&myObject);
     
     glFlush();
 }
@@ -73,13 +75,27 @@ int main()
 
     Image *img = load_image("/texture/Niko.png");
 
-
     MainData.shaderProgram = helper_basic_shader_program_setup();
     glUseProgram(MainData.shaderProgram);
 
     GLuint niko = helper_gen_texture(img);
 
-    glDeleteTextures(1, &niko);
+    float positions[] = {
+        -0.5f, -0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        0.5f,  0.5f, 0.0f,
+        -0.5f,  0.5f, 0.0f
+    };
+
+    float uvs[] = {
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f
+    };
+
+    myObject = object_create_from_points(positions, uvs, 4);
+    myObject.textureID = niko;
     
 
     emscripten_set_main_loop(loop, -1, true);

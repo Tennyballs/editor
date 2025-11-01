@@ -143,6 +143,5 @@ GLuint helper_basic_shader_program_setup()
 
     return program;
 };
-GLuint helper_gen_object();
 
 #endif//HELPER_H

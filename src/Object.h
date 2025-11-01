@@ -1,15 +1,66 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include <GL/glfw.h>
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
+#include <GLES3/gl3.h>
+
 #include "Vector.h"
 
 typedef struct __attribute__((packed)) Object {
-    GLuint VAO, position, uv, textureID, EBO;
+    GLuint VAO;
+    GLuint positionVBO;
+    GLuint uvVBO;
+    GLuint EBO;
+    GLuint textureID;
+    GLsizei vertexCount;
 } Object;
 
+void object_draw(Object *obj)
+{
+    glActiveTexture(GL_TEXTURE0); 
+    glBindTexture(GL_TEXTURE_2D, obj->textureID); 
+    
+    glBindVertexArray(obj->VAO);
 
-void object_draw();
+    glDrawArrays(GL_TRIANGLES, 0, obj->vertexCount);
 
-Object object_create_from_points(float *vertices);
+    glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+
+Object object_create_from_points(float *positions, float *uvs, GLsizei num_vertices) {
+    Object obj;
+    obj.vertexCount = num_vertices;
+    obj.textureID = 0;
+
+    size_t pos_size = num_vertices * 3 * sizeof(float);
+    size_t uv_size = num_vertices * 2 * sizeof(float);
+
+    glGenVertexArrays(1, &obj.VAO);
+    glBindVertexArray(obj.VAO);
+
+    glGenBuffers(1, &obj.positionVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, obj.positionVBO);
+    glBufferData(GL_ARRAY_BUFFER, pos_size, positions, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glGenBuffers(1, &obj.uvVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, obj.uvVBO);
+    glBufferData(GL_ARRAY_BUFFER, uv_size, uvs, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glEnableVertexAttribArray(1);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    return obj;
+}
+
 
 #endif//OBJECT_H
