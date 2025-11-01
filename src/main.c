@@ -8,12 +8,11 @@
 // GL
 #define GLFW_INCLUDE_ES3
 #include <GL/glfw.h>
+
+// my classes
 #include "Image.h"
 #include "Helper.h"
 #include "Object.h"
-#include "Arrays.h"
-
-
 
 unsigned int SCREEN_WIDTH, SCREEN_HEIGHT;
 double SCREEN_CENTER_X, SCREEN_CENTER_Y;
