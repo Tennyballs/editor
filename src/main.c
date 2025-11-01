@@ -46,7 +46,6 @@ void loop()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     object_draw(&myObject);
-    
     glFlush();
 }
 
@@ -79,24 +78,27 @@ int main()
     glUseProgram(MainData.shaderProgram);
 
     GLuint niko = helper_gen_texture(img);
-
     float positions[] = {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.5f,  0.5f, 0.0f,
-        -0.5f,  0.5f, 0.0f
+        -1.0f,  -1.0f,  0.0f,
+        1.0f,   -1.0f,  0.0f,
+        -1.0f,  1.0f,   0.0f,
+        1.0f,   1.0f,   0.0f
     };
 
     float uvs[] = {
+        0.0f, 1.0f,
+        1.0f, 1.0f,
         0.0f, 0.0f,
         1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f
     };
 
     myObject = object_create_from_points(positions, uvs, 4);
     myObject.textureID = niko;
-    
+
+
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     emscripten_set_main_loop(loop, -1, true);
     return 0;

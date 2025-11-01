@@ -24,7 +24,7 @@ void object_draw(Object *obj)
     
     glBindVertexArray(obj->VAO);
 
-    glDrawArrays(GL_TRIANGLES, 0, obj->vertexCount);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, obj->vertexCount);
 
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);

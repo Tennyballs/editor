@@ -18,8 +18,19 @@ GLuint helper_gen_texture(Image *img)
     
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img->width, img->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 
+                 0,                  // Mipmap level
+                 GL_RGBA,            // Internal format GPU stores as
+                 img->width,         // Width of the image
+                 img->height,        // Height of the image
+                 0,                  // Border (must be 0)
+                 GL_RGBA,            // Format of the provided data
+                 GL_UNSIGNED_BYTE,   // Type of the provided data
+                 img->data           // <-- THE ACTUAL PIXEL DATA POINTER
+    );
 
     glBindTexture(GL_TEXTURE_2D, 0);
 
