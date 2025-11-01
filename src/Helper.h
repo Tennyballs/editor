@@ -120,11 +120,11 @@ GLuint helper_new_shader(GLenum shaderType, const char *source)
     return shader;
 }
 
-GLuint helper_basic_shader_program_setup()
+GLuint helper_basic_shader_program_setup(const char *vertPath, const char *fragPath)
 {
     GLuint vertexShader, fragmentShader;
-    vertexShader = helper_new_shader(GL_VERTEX_SHADER, "/shader/base.vert");
-    fragmentShader = helper_new_shader(GL_FRAGMENT_SHADER, "/shader/base.frag");
+    vertexShader = helper_new_shader(GL_VERTEX_SHADER, vertPath);
+    fragmentShader = helper_new_shader(GL_FRAGMENT_SHADER, fragPath);
     GLuint program = glCreateProgram();
     glAttachShader(program, vertexShader);
     glAttachShader(program, fragmentShader);
@@ -151,6 +151,9 @@ GLuint helper_basic_shader_program_setup()
     }
     glDetachShader(program, vertexShader);
     glDetachShader(program, fragmentShader);
+
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
 
     return program;
 };

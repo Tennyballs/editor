@@ -73,7 +73,7 @@ int main()
 
     Image *img = load_image("/texture/Niko.png");
 
-    MainData.shaderProgram = helper_basic_shader_program_setup();
+    MainData.shaderProgram = helper_basic_shader_program_setup("/shaders/2d/shader.vert", "/shaders/2d/shader.frag");
     glUseProgram(MainData.shaderProgram);
 
     GLuint niko = helper_gen_texture(img);
